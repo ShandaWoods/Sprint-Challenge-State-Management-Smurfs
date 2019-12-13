@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Loader from 'react-loader-spinner';
 
@@ -6,10 +6,8 @@ import Loader from 'react-loader-spinner';
 import { getSmurf, postSmurf } from '../actions ';
 
  const Smurf = props => {
-//    const handleChanges = e => {
-        
-//       };
-    
+     [newSmurf, setNewSmurf] = useState('');
+
     return (
         <div>
         <h1>What's a Smurf?</h1>
@@ -20,12 +18,13 @@ import { getSmurf, postSmurf } from '../actions ';
         {props.smurf && <p>{props.smurf.smurf}</p>}
         <button onClick={props.getSmurf}>Get it.</button>
             <div>
-            <input
+            <input 
           type="text"
-          value={props.newSmurf}
+          value={newSmurf}
           placeholder="Add new smurf"
+          onChange={(event => setNewSmurf(event.target.value))}
         />
-        <button onClick={postSmurf}>Add smurf</button>
+        <button onClick={postSmurf(newSmurf)}>Add smurf</button>
             
             </div>
         </div>
@@ -36,7 +35,8 @@ const mapStateToProps = state => {
     return {
         smurf: state.smurf,
         isFetching: state.isFetching,
-        error: state.error
+        error: state.error,
+        newSmurf: state.newSmurf,
     };
 };
 
